@@ -6,7 +6,25 @@ defmodule ExWebhook.Web.WebhookController do
   alias ExWebhook.Schema.Webhook, as: WebhookSchema
   alias ExWebhook.Schema.WebhookEvent, as: WebhookEventSchema
   alias ExWebhook.WebhookRepository
+  alias ExWebhook.Web.Schemas
   require Logger
+
+  operation :index,
+    tags: ["Webhooks Resource"],
+    summary: "List webhooks",
+    description: "List all webhooks",
+    parameters: [
+      tenant: [
+        name: "tenant",
+        in: :path,
+        description: "The ID of the tenant",
+        required: true,
+        schema: %{type: :string}
+      ]
+    ],
+    responses: [
+      ok: Schemas.WebhookList
+    ]
 
   def index(conn, %{"tenant" => tenant_id}) do
     case WebhookRepository.list_webhooks(tenant_id, nil) do
@@ -41,6 +59,24 @@ defmodule ExWebhook.Web.WebhookController do
     end
   end
 
+  operation :new,
+    tags: ["Webhooks Resource"],
+    summary: "Register a webhook",
+    description: "Allows you to register a webhook that receives event updates from the system",
+    parameters: [
+      tenant: [
+        name: "tenant",
+        in: :path,
+        description: "The ID of the tenant",
+        required: true,
+        schema: %{type: :string}
+      ]
+    ],
+    request_body: {Schemas.WebhookRequest, [required: true]},
+    responses: [
+      created: Schemas.Webhook
+    ]
+
   def new(conn, %{"tenant" => tenant}) do
     with {:ok, params} <- validate_webhook_params(conn.body_params),
          {:ok, entity} <- create_webhook(Map.put(params, "tenant", tenant)) do
@@ -64,6 +100,28 @@ defmodule ExWebhook.Web.WebhookController do
         |> json(%{error: error_message})
     end
   end
+
+  operation :delete,
+    tags: ["Webhooks Resource"],
+    summary: "Delete a registered webhook",
+    description: "Allows you to delete a webhook that is no longer needed. Deleting a webhook will stop it from receiving any future event updates",
+    parameters: [
+      tenant: [
+        name: "tenant",
+        in: :path,
+        description: "The ID of the tenant",
+        required: true,
+        schema: %{type: :string}
+      ],
+      webhookId: [
+        in: :path,
+        description: "Webhook ID",
+        schema: %{type: :string}
+      ]
+    ],
+    responses: %{
+      204 => nil,
+    }
 
   def delete(conn, %{"tenant" => tenant_id, "id" => webhook_id}) do
     case ExWebhook.Repo.get_by(WebhookSchema, id: webhook_id, tenant_id: tenant_id) do
