@@ -3,7 +3,7 @@ defmodule ExWebhook.Web.Router do
 
   pipeline :api do
     plug(:accepts, ["json"])
-    plug Oaskit.Plugs.SpecProvider, spec: ExWebhook.Web.ApiSpec
+    plug(Oaskit.Plugs.SpecProvider, spec: ExWebhook.Web.ApiSpec)
   end
 
   scope "/q", ExWebhook.Web do

@@ -2,21 +2,24 @@ defmodule ExWebhook.Web.Schemas do
   use JSV.Schema
 
   defmodule Webhook do
-    defschema %{
+    defschema(%{
       title: "Webhook",
       description: "A registered webhook.",
       type: :object,
-
       properties: %{
         id: %{type: :string, description: "The unique identifier of the webhook"},
         url: %{type: :string, description: "The URL for the webhook"},
         isBatch: %{type: :boolean, description: "Indicates if events are batched"},
-        events: %{type: :array, description: "A list of event names to subscribe to.", items: %{type: :string}},
+        events: %{
+          type: :array,
+          description: "A list of event names to subscribe to.",
+          items: %{type: :string}
+        },
         createdAt: %{
           type: :string,
           description: "The creation timestamp",
           format: :"date-time"
-        },
+        }
       },
       additionalProperties: false,
       example: %{
@@ -24,34 +27,38 @@ defmodule ExWebhook.Web.Schemas do
         "url" => "http://localhost:8080/inyo/webhooks",
         "isBatch" => false
       }
-    }
+    })
   end
 
   defmodule WebhookRequest do
-    defschema %{
+    defschema(%{
       title: "WebhookRequest",
       description: "The input parameters for creating a new webhook.",
       type: :object,
       properties: %{
         url: %{type: :string, description: "The URL to send webhook events to."},
         isBatch: %{type: :boolean, description: "Indicates if events should be sent in a batch."},
-        events: %{type: :array, description: "A list of event names to subscribe to.", items: %{type: :string}},
+        events: %{
+          type: :array,
+          description: "A list of event names to subscribe to.",
+          items: %{type: :string}
+        }
       },
       additionalProperties: false,
       example: %{
         "url" => "http://localhost:8080/test/webhooks/agents",
-        "events" => ["documentUpdatedEvents", "agentUpdatedEvents"],
+        "events" => ["documentUpdatedEvents", "agentUpdatedEvents"]
       }
-    }
+    })
   end
 
   defmodule WebhookList do
-    defschema %{
+    defschema(%{
       title: "WebhookList",
       description: "A list of webhooks.",
       type: :object,
       properties: %{
-        webhooks: %{type: :array, description: "The list of webhooks.", items: Webhook},
+        webhooks: %{type: :array, description: "The list of webhooks.", items: Webhook}
       },
       additionalProperties: false,
       example: %{
@@ -72,6 +79,6 @@ defmodule ExWebhook.Web.Schemas do
           }
         ]
       }
-    }
+    })
   end
 end

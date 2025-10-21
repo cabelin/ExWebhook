@@ -104,7 +104,8 @@ defmodule ExWebhook.Web.WebhookController do
   operation :delete,
     tags: ["Webhooks Resource"],
     summary: "Delete a registered webhook",
-    description: "Allows you to delete a webhook that is no longer needed. Deleting a webhook will stop it from receiving any future event updates",
+    description:
+      "Allows you to delete a webhook that is no longer needed. Deleting a webhook will stop it from receiving any future event updates",
     parameters: [
       tenant: [
         name: "tenant",
@@ -120,7 +121,7 @@ defmodule ExWebhook.Web.WebhookController do
       ]
     ],
     responses: %{
-      204 => nil,
+      204 => nil
     }
 
   def delete(conn, %{"tenant" => tenant_id, "id" => webhook_id}) do

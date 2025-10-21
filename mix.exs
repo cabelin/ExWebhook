@@ -52,7 +52,7 @@ defmodule ExWebhook.MixProject do
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:ex_doc, "~> 0.34", only: :dev, runtime: false},
       {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
-      {:oaskit, "~> 0.6"},
+      {:oaskit, "~> 0.6"}
     ]
   end
 
