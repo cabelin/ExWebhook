@@ -1,7 +1,13 @@
 defmodule ExWebhook.Web.Schemas do
+  @moduledoc """
+  Schemas apidocs
+  """
   use JSV.Schema
 
   defmodule Webhook do
+    @moduledoc """
+    Webhook apidocs schema
+    """
     defschema(%{
       title: "Webhook",
       description: "A registered webhook.",
@@ -31,6 +37,9 @@ defmodule ExWebhook.Web.Schemas do
   end
 
   defmodule WebhookRequest do
+    @moduledoc """
+    WebhookRequest apidocs schema
+    """
     defschema(%{
       title: "WebhookRequest",
       description: "The input parameters for creating a new webhook.",
@@ -53,6 +62,9 @@ defmodule ExWebhook.Web.Schemas do
   end
 
   defmodule WebhookList do
+    @moduledoc """
+    WebhookList apidocs schema
+    """
     defschema(%{
       title: "WebhookList",
       description: "A list of webhooks.",

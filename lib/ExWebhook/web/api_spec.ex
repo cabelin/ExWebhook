@@ -1,4 +1,7 @@
 defmodule ExWebhook.Web.ApiSpec do
+  @moduledoc """
+  For generate apidocs
+  """
   alias Oaskit.Spec.Paths
   alias Oaskit.Spec.Server
   alias ExWebhook.Web.{Endpoint, Router}

@@ -5,8 +5,8 @@ defmodule ExWebhook.Web.WebhookController do
   use ExWebhook.Web, :controller
   alias ExWebhook.Schema.Webhook, as: WebhookSchema
   alias ExWebhook.Schema.WebhookEvent, as: WebhookEventSchema
-  alias ExWebhook.WebhookRepository
   alias ExWebhook.Web.Schemas
+  alias ExWebhook.WebhookRepository
   require Logger
 
   operation :index,
