@@ -6,8 +6,10 @@ defmodule ExWebhook.Web.Router do
     plug(Oaskit.Plugs.SpecProvider, spec: ExWebhook.Web.ApiSpec)
   end
 
-  scope "/q", ExWebhook.Web do
-    get("/openapi", Oaskit.SpecController, spec: ExWebhook.Web.ApiSpec)
+  scope "/" do
+    pipe_through(:api)
+
+    get("/q/openapi", Oaskit.SpecController, :show)
   end
 
   scope "/organizations/:tenant", ExWebhook.Web do
